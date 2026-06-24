@@ -4,13 +4,20 @@
  */
 package com.Penjualan.Apps.Nota;
 
+import com.Penjualan.Apps.Auth.Session;
 import com.Penjualan.Apps.Config.Koneksi;
+import java.io.InputStream;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JSpinner;
+
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -36,12 +43,22 @@ public class FormNota extends javax.swing.JFrame {
         kosong();
         aktif();
         autonumber();
+        
+        setData();
     }
 
+    protected void setData() {
+        String idKasir = Session.getIdKasir();
+        String namaKasir = Session.getNamaKasir();
+        
+        txtId.setText(idKasir);
+        txtNama.setText(namaKasir);
+    }
+    
     protected void nama() {
         try {
             String sql = "SELECT * FROM kasir1 WHERE id_kasir='"
-                    + vKasir.getText() + "'";
+                    + txtIdKasir.getText() + "'";
             Statement stat = conn.createStatement();
             ResultSet hasil = stat.executeQuery(sql);
             if (hasil.next()) {
@@ -128,6 +145,31 @@ public class FormNota extends javax.swing.JFrame {
         txtTotalHarga.setText(Integer.toString(total));
     }
 
+    public void cetak() {
+        try {
+            String fileName = "nota.jasper";
+
+            InputStream is = getClass().getClassLoader().getResourceAsStream("IReportFile/" + fileName);
+
+            if (is == null) {
+                JOptionPane.showMessageDialog(rootPane,
+                        "File " + fileName + " tetap tidak ditemukan dengan ClassLoader!\n"
+                        + "Pastikan folder di src/main/resources bernama 'IReportFile' (bukan 'report')");
+                return;
+            }
+
+            HashMap parameter = new HashMap();
+            parameter.put("id_nota", txtIdNota.getText());
+
+            JasperPrint print = JasperFillManager.fillReport(is, parameter, conn);
+            JasperViewer.viewReport(print, false);
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(rootPane, "Gagal Mencetak: " + ex);
+            ex.printStackTrace();
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -139,7 +181,7 @@ public class FormNota extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        vKasir = new javax.swing.JLabel();
+        txtIdKasir = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtIdNota = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -171,7 +213,7 @@ public class FormNota extends javax.swing.JFrame {
         btnCari2 = new javax.swing.JButton();
         jTgl = new javax.swing.JSpinner();
         jLabel10 = new javax.swing.JLabel();
-        valueNama = new javax.swing.JLabel();
+        txtNamaKasir = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblTransaksi = new javax.swing.JTable();
         jLabel18 = new javax.swing.JLabel();
@@ -190,8 +232,8 @@ public class FormNota extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel2.setText("ID Kasir");
 
-        vKasir.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        vKasir.setText("jLabel1");
+        txtIdKasir.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        txtIdKasir.setText("jLabel1");
 
         jLabel4.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel4.setText("ID Nota");
@@ -387,8 +429,8 @@ public class FormNota extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel10.setText("Tgl Nota");
 
-        valueNama.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        valueNama.setText("test");
+        txtNamaKasir.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        txtNamaKasir.setText("test");
 
         tblTransaksi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -445,7 +487,7 @@ public class FormNota extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
-                                .addComponent(vKasir))
+                                .addComponent(txtIdKasir))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(18, 18, 18)
@@ -453,15 +495,14 @@ public class FormNota extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel10))
+                            .addComponent(jLabel10)
                             .addComponent(jLabel9))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTgl, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(valueNama)))
+                            .addComponent(txtNamaKasir)
+                            .addComponent(jTgl, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -492,9 +533,9 @@ public class FormNota extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(vKasir)
+                            .addComponent(txtIdKasir)
                             .addComponent(jLabel9)
-                            .addComponent(valueNama))
+                            .addComponent(txtNamaKasir))
                         .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
@@ -577,7 +618,7 @@ public class FormNota extends javax.swing.JFrame {
             stat.setString(1, txtIdNota.getText());
             stat.setString(2, fd);
             stat.setString(3, txtId.getText());
-            stat.setString(4, vKasir.getText());
+            stat.setString(4, txtIdKasir.getText());
             stat.executeUpdate();
             int t = tblTransaksi.getRowCount();
             for (int i = 0; i < t; i++) {
@@ -594,6 +635,10 @@ public class FormNota extends javax.swing.JFrame {
                 stat2.executeUpdate();
             }
             JOptionPane.showMessageDialog(null, "data berhasil disimpan");
+
+            cetak();
+            kosong();
+            aktif();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "data gagal disimpan" + e);
         }
@@ -677,14 +722,14 @@ public class FormNota extends javax.swing.JFrame {
     private javax.swing.JTextField txtHJual;
     private javax.swing.JTextField txtHbeli;
     private javax.swing.JTextField txtId;
+    private javax.swing.JLabel txtIdKasir;
     private javax.swing.JTextField txtIdNota;
     private javax.swing.JTextField txtKodeBarang;
     private javax.swing.JTextField txtNama;
     private javax.swing.JTextField txtNama1;
+    private javax.swing.JLabel txtNamaKasir;
     private javax.swing.JTextField txtQyt;
     private javax.swing.JTextField txtTotal;
     private javax.swing.JTextField txtTotalHarga;
-    private javax.swing.JLabel vKasir;
-    private javax.swing.JLabel valueNama;
     // End of variables declaration//GEN-END:variables
 }

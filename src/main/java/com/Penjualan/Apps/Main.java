@@ -3,6 +3,7 @@
  */
 package com.Penjualan.Apps;
 
+import com.Penjualan.Apps.Auth.Login;
 import javax.swing.SwingUtilities;
 import com.formdev.flatlaf.FlatLightLaf;
 
@@ -21,7 +22,7 @@ public class Main {
         }
 
         SwingUtilities.invokeLater(() -> {
-            new MainFrame().setVisible(true);
+            new Login().setVisible(true);
         });
     }
 }
