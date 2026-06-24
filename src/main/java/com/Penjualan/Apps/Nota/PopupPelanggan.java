@@ -27,6 +27,7 @@ public class PopupPelanggan extends javax.swing.JFrame {
 
     public PopupPelanggan() {
         initComponents();
+        setLocationRelativeTo(null);
         datatable();
     }
 
@@ -75,7 +76,7 @@ public class PopupPelanggan extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jButton1.setText("Cari");
         jButton1.addActionListener(this::jButton1ActionPerformed);

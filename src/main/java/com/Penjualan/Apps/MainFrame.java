@@ -4,11 +4,13 @@
  */
 package com.Penjualan.Apps;
 
+import com.Penjualan.Apps.Auth.Login;
 import com.Penjualan.Apps.Auth.Session;
 import com.Penjualan.Apps.Barang.DataBarang;
 import com.Penjualan.Apps.Kasir.DataKasir;
 import com.Penjualan.Apps.Nota.FormNota;
 import com.Penjualan.Apps.Pelanggan.DataPelanggan;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,6 +25,7 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
+        setLocationRelativeTo(null);
         setData();
     }
 
@@ -133,7 +136,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Login Sebagai :", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
-        jLabel2.setText("ID Kasir");
+        jLabel2.setText("ID Kasir :");
 
         txtId.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtId.setText("Andi123");
@@ -141,7 +144,7 @@ public class MainFrame extends javax.swing.JFrame {
         txtNama.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtNama.setText("Andi123");
 
-        jLabel5.setText("Nama Kasir");
+        jLabel5.setText("Nama Kasir :");
 
         jLabel6.setText("Username :");
 
@@ -190,6 +193,7 @@ public class MainFrame extends javax.swing.JFrame {
         jButton5.setBackground(new java.awt.Color(255, 0, 51));
         jButton5.setForeground(new java.awt.Color(255, 255, 255));
         jButton5.setText("Logout");
+        jButton5.addActionListener(this::jButton5ActionPerformed);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -248,6 +252,26 @@ public class MainFrame extends javax.swing.JFrame {
         x.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+
+        int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "Yakin ingin logout?",
+                "Konfirmasi Logout",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm == JOptionPane.YES_OPTION) {
+
+            Session.clear();
+
+            Login login = new Login();
+            login.setVisible(true);
+
+            this.dispose();
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments

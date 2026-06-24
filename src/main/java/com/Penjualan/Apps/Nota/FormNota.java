@@ -6,6 +6,7 @@ package com.Penjualan.Apps.Nota;
 
 import com.Penjualan.Apps.Auth.Session;
 import com.Penjualan.Apps.Config.Koneksi;
+import com.Penjualan.Apps.MainFrame;
 import java.io.InputStream;
 
 import java.sql.*;
@@ -37,28 +38,27 @@ public class FormNota extends javax.swing.JFrame {
 
     public FormNota() {
         initComponents();
-
-//        String KD UserID.getUserLogin();
-//        jLabel16.setText(KD);
+        setLocationRelativeTo(null);
+        
         kosong();
         aktif();
         autonumber();
-        
+
         setData();
     }
 
     protected void setData() {
         String idKasir = Session.getIdKasir();
         String namaKasir = Session.getNamaKasir();
-        
-        txtId.setText(idKasir);
-        txtNama.setText(namaKasir);
+
+        lblIdKasir.setText(idKasir);
+        lblNamaKasir.setText(namaKasir);
     }
-    
+
     protected void nama() {
         try {
             String sql = "SELECT * FROM kasir1 WHERE id_kasir='"
-                    + txtIdKasir.getText() + "'";
+                    + lblIdKasir.getText() + "'";
             Statement stat = conn.createStatement();
             ResultSet hasil = stat.executeQuery(sql);
             if (hasil.next()) {
@@ -181,7 +181,7 @@ public class FormNota extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtIdKasir = new javax.swing.JLabel();
+        lblIdKasir = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtIdNota = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -213,7 +213,7 @@ public class FormNota extends javax.swing.JFrame {
         btnCari2 = new javax.swing.JButton();
         jTgl = new javax.swing.JSpinner();
         jLabel10 = new javax.swing.JLabel();
-        txtNamaKasir = new javax.swing.JLabel();
+        lblNamaKasir = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblTransaksi = new javax.swing.JTable();
         jLabel18 = new javax.swing.JLabel();
@@ -232,8 +232,8 @@ public class FormNota extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel2.setText("ID Kasir");
 
-        txtIdKasir.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        txtIdKasir.setText("jLabel1");
+        lblIdKasir.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        lblIdKasir.setText("jLabel1");
 
         jLabel4.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel4.setText("ID Nota");
@@ -429,8 +429,8 @@ public class FormNota extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel10.setText("Tgl Nota");
 
-        txtNamaKasir.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        txtNamaKasir.setText("test");
+        lblNamaKasir.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        lblNamaKasir.setText("test");
 
         tblTransaksi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -457,7 +457,7 @@ public class FormNota extends javax.swing.JFrame {
         btnCari5.setText("Batal");
         btnCari5.addActionListener(this::btnCari5ActionPerformed);
 
-        btnCari6.setText("Keluar");
+        btnCari6.setText("Kembali");
         btnCari6.addActionListener(this::btnCari6ActionPerformed);
 
         jLabel19.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
@@ -487,7 +487,7 @@ public class FormNota extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtIdKasir))
+                                .addComponent(lblIdKasir))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(18, 18, 18)
@@ -501,7 +501,7 @@ public class FormNota extends javax.swing.JFrame {
                             .addComponent(jLabel9))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNamaKasir)
+                            .addComponent(lblNamaKasir)
                             .addComponent(jTgl, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -533,9 +533,9 @@ public class FormNota extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(txtIdKasir)
+                            .addComponent(lblIdKasir)
                             .addComponent(jLabel9)
-                            .addComponent(txtNamaKasir))
+                            .addComponent(lblNamaKasir))
                         .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
@@ -618,7 +618,7 @@ public class FormNota extends javax.swing.JFrame {
             stat.setString(1, txtIdNota.getText());
             stat.setString(2, fd);
             stat.setString(3, txtId.getText());
-            stat.setString(4, txtIdKasir.getText());
+            stat.setString(4, lblIdKasir.getText());
             stat.executeUpdate();
             int t = tblTransaksi.getRowCount();
             for (int i = 0; i < t; i++) {
@@ -651,7 +651,9 @@ public class FormNota extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCari5ActionPerformed
 
     private void btnCari6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCari6ActionPerformed
-        dispose();
+        MainFrame x = new MainFrame();
+        x.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnCari6ActionPerformed
 
     private void txtQytActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQytActionPerformed
@@ -717,17 +719,17 @@ public class FormNota extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSpinner jTgl;
+    private javax.swing.JLabel lblIdKasir;
+    private javax.swing.JLabel lblNamaKasir;
     private javax.swing.JTable tblTransaksi;
     private javax.swing.JTextArea txtAlamat;
     private javax.swing.JTextField txtHJual;
     private javax.swing.JTextField txtHbeli;
     private javax.swing.JTextField txtId;
-    private javax.swing.JLabel txtIdKasir;
     private javax.swing.JTextField txtIdNota;
     private javax.swing.JTextField txtKodeBarang;
     private javax.swing.JTextField txtNama;
     private javax.swing.JTextField txtNama1;
-    private javax.swing.JLabel txtNamaKasir;
     private javax.swing.JTextField txtQyt;
     private javax.swing.JTextField txtTotal;
     private javax.swing.JTextField txtTotalHarga;

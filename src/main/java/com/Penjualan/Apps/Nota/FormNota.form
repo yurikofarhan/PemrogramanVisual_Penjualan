@@ -44,7 +44,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="txtIdKasir" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblIdKasir" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
@@ -64,7 +64,7 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtNamaKasir" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblNamaKasir" min="-2" max="-2" attributes="0"/>
                           <Component id="jTgl" min="-2" pref="144" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -104,9 +104,9 @@
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtIdKasir" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblIdKasir" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtNamaKasir" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblNamaKasir" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -159,7 +159,7 @@
         <Property name="text" type="java.lang.String" value="ID Kasir"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="txtIdKasir">
+    <Component class="javax.swing.JLabel" name="lblIdKasir">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="SansSerif" size="12" style="1"/>
@@ -554,7 +554,7 @@
         <Property name="text" type="java.lang.String" value="Tgl Nota"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="txtNamaKasir">
+    <Component class="javax.swing.JLabel" name="lblNamaKasir">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="SansSerif" size="12" style="1"/>
@@ -617,7 +617,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnCari6">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Keluar"/>
+        <Property name="text" type="java.lang.String" value="Kembali"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCari6ActionPerformed"/>

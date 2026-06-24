@@ -16,33 +16,33 @@ import java.awt.event.KeyEvent;
  * @author Yuriko
  */
 public class PopupBarang extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PopupBarang.class.getName());
 
     /**
      * Creates new form PopupBarang
      */
-    
     private Connection conn = new Koneksi().getConnection();
     private DefaultTableModel tabmode;
     public FormNota brg = null;
+
     public PopupBarang() {
         initComponents();
+        setLocationRelativeTo(null);
         datatable();
     }
-    
-    
-    protected void datatable(){
+
+    protected void datatable() {
         Object[] Baris = {"Kode Barang", "Nama Barang", "Jenis", "Harga Beli", "Harga Jual"};
         tabmode = new DefaultTableModel(null, Baris);
         String cariitem = txtcari.getText();
         try {
-            String sql = "SELECT * FROM barang1 WHERE kdbrg LIKE '%"+cariitem+
-             "%' OR nmbrg LIKE '%"+cariitem+
-             "%' ORDER BY kdbrg ASC";
+            String sql = "SELECT * FROM barang1 WHERE kdbrg LIKE '%" + cariitem
+                    + "%' OR nmbrg LIKE '%" + cariitem
+                    + "%' ORDER BY kdbrg ASC";
             java.sql.Statement stat = conn.createStatement();
-            ResultSet hasil=  stat.executeQuery(sql);
-            while (hasil.next()){
+            ResultSet hasil = stat.executeQuery(sql);
+            while (hasil.next()) {
                 tabmode.addRow(new Object[]{
                     hasil.getString(1),
                     hasil.getString(2),
@@ -52,9 +52,9 @@ public class PopupBarang extends javax.swing.JFrame {
                 });
             }
             jTable1.setModel(tabmode);
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -71,7 +71,7 @@ public class PopupBarang extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jButton1.setText("Cari");
         jButton1.addActionListener(this::jButton1ActionPerformed);
@@ -138,8 +138,8 @@ public class PopupBarang extends javax.swing.JFrame {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         int tabelPelanggan = jTable1.getSelectedRow();
-        brg.kdbrg = jTable1.getValueAt(tabelPelanggan, 0).toString(); 
-        brg.nmbrg = jTable1.getValueAt(tabelPelanggan, 1).toString(); 
+        brg.kdbrg = jTable1.getValueAt(tabelPelanggan, 0).toString();
+        brg.nmbrg = jTable1.getValueAt(tabelPelanggan, 1).toString();
         brg.jenisbrg = jTable1.getValueAt(tabelPelanggan, 2).toString();
         brg.hb = jTable1.getValueAt(tabelPelanggan, 3).toString();
         brg.hj = jTable1.getValueAt(tabelPelanggan, 4).toString();

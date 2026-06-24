@@ -3,43 +3,45 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.Penjualan.Apps.Barang;
+
 import com.Penjualan.Apps.Config.Koneksi;
+import com.Penjualan.Apps.MainFrame;
 import java.awt.event.KeyEvent;
 import java.sql.*;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-
 /**
  *
  * @author Yuriko
  */
 public class DataBarang extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DataBarang.class.getName());
     private DefaultTableModel tabmode;
     private Connection conn = Koneksi.getConnection();
-    
+
     /**
      * Creates new form DataPelanggan
      */
     public DataBarang() {
         initComponents();
+        setLocationRelativeTo(null);
         kosong();
         aktif();
         datatable();
         cmbJenis.setModel(new DefaultComboBoxModel<>(new String[]{
-                    "-","Makanan","Minuman"
-                }));
-        
+            "-", "Makanan", "Minuman"
+        }));
+
     }
-    
-    protected void aktif (){
+
+    protected void aktif() {
         txtId.requestFocus();
     }
-    
-    protected void kosong(){
+
+    protected void kosong() {
         txtId.setText("");
         txtNama.setText("");
         txtJual.setText("");
@@ -48,17 +50,17 @@ public class DataBarang extends javax.swing.JFrame {
         txtcari.setText("");
         buttonGroup1.clearSelection();
     }
-    
-    protected void datatable (){
+
+    protected void datatable() {
         Object[] Baris = {"ID Barang", "Nama Barang", "Harga Jual", "Harga Beli", "Stok", "Jenis"};
         tabmode = new DefaultTableModel(null, Baris);
-        String cariitem=txtcari.getText();
+        String cariitem = txtcari.getText();
         try {
-            String sql = "SELECT * FROM barang where id like '%"+cariitem+"%' or nama like '%"+cariitem+"%' order by id asc";
-            
-            Statement stat =  conn.createStatement();
-            ResultSet hasil=  stat.executeQuery(sql);
-            while (hasil.next()){
+            String sql = "SELECT * FROM barang where id like '%" + cariitem + "%' or nama like '%" + cariitem + "%' order by id asc";
+
+            Statement stat = conn.createStatement();
+            ResultSet hasil = stat.executeQuery(sql);
+            while (hasil.next()) {
                 tabmode.addRow(new Object[]{
                     hasil.getString(1),
                     hasil.getString(2),
@@ -70,7 +72,7 @@ public class DataBarang extends javax.swing.JFrame {
             }
             tblBarang.setModel(tabmode);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "data gagal dipanggil"+e);
+            JOptionPane.showMessageDialog(null, "data gagal dipanggil" + e);
         }
     }
 
@@ -107,6 +109,7 @@ public class DataBarang extends javax.swing.JFrame {
         txtStok = new javax.swing.JTextField();
         cmbJenis = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
+        jButton7 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -182,6 +185,9 @@ public class DataBarang extends javax.swing.JFrame {
 
         jLabel11.setText("Jenis Barang");
 
+        jButton7.setText("Kembali");
+        jButton7.addActionListener(this::jButton7ActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -217,13 +223,16 @@ public class DataBarang extends javax.swing.JFrame {
                                             .addComponent(cmbJenis, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addGap(81, 81, 81)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton2)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton1)
+                                        .addComponent(jButton2)
                                         .addGap(18, 18, 18)
                                         .addComponent(jButton5))
                                     .addComponent(jButton3)
-                                    .addComponent(jButton4)))
+                                    .addComponent(jButton4)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButton1)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jButton7))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addGap(59, 59, 59)
@@ -234,7 +243,7 @@ public class DataBarang extends javax.swing.JFrame {
                                 .addComponent(jButton6))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8))))
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -251,7 +260,7 @@ public class DataBarang extends javax.swing.JFrame {
                         .addGap(7, 7, 7)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1)
-                            .addComponent(jButton5))))
+                            .addComponent(jButton7))))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -260,7 +269,9 @@ public class DataBarang extends javax.swing.JFrame {
                             .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
-                        .addComponent(jButton2)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton2)
+                            .addComponent(jButton5))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton3)
@@ -304,13 +315,12 @@ public class DataBarang extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
+
 //        if (rlaki.isSelected()) {
 //            jenis = "Laki-Laki";
 //        } else if (rperempuan.isSelected()) {
 //            jenis = "Perempuan";
 //        }
-
         String sql = "insert into barang values (?,?,?,?,?,?)";
         try {
             PreparedStatement stat = conn.prepareStatement(sql);
@@ -334,7 +344,6 @@ public class DataBarang extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-       
 
         try {
             String sql = "update barang set nama=?, harga_jual=?, harga_beli=?, stok=?, jenis=? where id='" + txtId.getText() + "'";
@@ -377,13 +386,13 @@ public class DataBarang extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        kosong(); 
-        datatable(); 
+        kosong();
+        datatable();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        dispose(); 
+        dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void txtcariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcariActionPerformed
@@ -410,8 +419,8 @@ public class DataBarang extends javax.swing.JFrame {
         txtJual.setText(c);
         txtBeli.setText(d);
         txtStok.setText(e);
-        
-         if ("Makanan".equals(f)) {
+
+        if ("Makanan".equals(f)) {
             cmbJenis.setSelectedItem("Makanan");
         } else {
             cmbJenis.setSelectedItem("Minuman");
@@ -437,6 +446,12 @@ public class DataBarang extends javax.swing.JFrame {
     private void txtStokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStokActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtStokActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        MainFrame x = new MainFrame();
+        x.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -472,6 +487,7 @@ public class DataBarang extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

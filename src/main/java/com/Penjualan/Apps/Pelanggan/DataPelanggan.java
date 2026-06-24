@@ -3,39 +3,41 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.Penjualan.Apps.Pelanggan;
+
 import com.Penjualan.Apps.Config.Koneksi;
+import com.Penjualan.Apps.MainFrame;
 import java.awt.event.KeyEvent;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
 
 /**
  *
  * @author Yuriko
  */
 public class DataPelanggan extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DataPelanggan.class.getName());
     private DefaultTableModel tabmode;
     private Connection conn = Koneksi.getConnection();
-    
+
     /**
      * Creates new form DataPelanggan
      */
     public DataPelanggan() {
         initComponents();
+        setLocationRelativeTo(null);
         kosong();
         aktif();
         datatable();
-        
+
     }
-    
-    protected void aktif (){
+
+    protected void aktif() {
         txtid.requestFocus();
     }
-    
-    protected void kosong(){
+
+    protected void kosong() {
         txtid.setText("");
         txtnm.setText("");
         txttelp.setText("");
@@ -43,17 +45,17 @@ public class DataPelanggan extends javax.swing.JFrame {
         txtcari.setText("");
         buttonGroup1.clearSelection();
     }
-    
-    protected void datatable (){
+
+    protected void datatable() {
         Object[] Baris = {"ID Pelanggan", "Nama", "Jenis Kelamin", "Telepon", "Alamat"};
         tabmode = new DefaultTableModel(null, Baris);
-        String cariitem=txtcari.getText();
+        String cariitem = txtcari.getText();
         try {
-            String sql = "SELECT * FROM pelanggan where id like '%"+cariitem+"%' or nmplgn like '%"+cariitem+"%' order by id asc";
-            
-            Statement stat =  conn.createStatement();
-            ResultSet hasil=  stat.executeQuery(sql);
-            while (hasil.next()){
+            String sql = "SELECT * FROM pelanggan where id like '%" + cariitem + "%' or nmplgn like '%" + cariitem + "%' order by id asc";
+
+            Statement stat = conn.createStatement();
+            ResultSet hasil = stat.executeQuery(sql);
+            while (hasil.next()) {
                 tabmode.addRow(new Object[]{
                     hasil.getString(1),
                     hasil.getString(2),
@@ -64,7 +66,7 @@ public class DataPelanggan extends javax.swing.JFrame {
             }
             tblplgn.setModel(tabmode);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "data gagal dipanggil"+e);
+            JOptionPane.showMessageDialog(null, "data gagal dipanggil" + e);
         }
     }
 
@@ -101,6 +103,7 @@ public class DataPelanggan extends javax.swing.JFrame {
         txtcari = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
+        jButton7 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -179,6 +182,9 @@ public class DataPelanggan extends javax.swing.JFrame {
 
         jLabel8.setText("Data Pelanggan");
 
+        jButton7.setText("Kembali");
+        jButton7.addActionListener(this::jButton7ActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -197,13 +203,16 @@ public class DataPelanggan extends javax.swing.JFrame {
                                 .addComponent(txtid, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(70, 70, 70)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton2)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jButton1)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jButton5))
+                                        .addComponent(jButton7))
                                     .addComponent(jButton3)
-                                    .addComponent(jButton4)))
+                                    .addComponent(jButton4)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButton2)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jButton5))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
@@ -225,7 +234,7 @@ public class DataPelanggan extends javax.swing.JFrame {
                                 .addComponent(jButton6))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8))))
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,7 +251,7 @@ public class DataPelanggan extends javax.swing.JFrame {
                         .addGap(7, 7, 7)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1)
-                            .addComponent(jButton5))))
+                            .addComponent(jButton7))))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -251,7 +260,9 @@ public class DataPelanggan extends javax.swing.JFrame {
                             .addComponent(txtnm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
-                        .addComponent(jButton2)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton2)
+                            .addComponent(jButton5))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -299,7 +310,7 @@ public class DataPelanggan extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
+
         String jenis = null;
         if (rlaki.isSelected()) {
             jenis = "Laki-Laki";
@@ -376,13 +387,13 @@ public class DataPelanggan extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        kosong(); 
-        datatable(); 
+        kosong();
+        datatable();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        dispose(); 
+        dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void txtcariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcariActionPerformed
@@ -422,6 +433,13 @@ public class DataPelanggan extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton6KeyPressed
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        MainFrame x = new MainFrame();
+        x.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton7ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -455,6 +473,7 @@ public class DataPelanggan extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
